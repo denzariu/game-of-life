@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useInterval } from 'react-timing-hooks';
-
+import {DeleteSVG, PauseSVG, PlaySVG} from '../assets/menu-svgs.tsx'
 
 
 
@@ -20,7 +20,7 @@ function Game() {
     pause,
     resume,
     isPaused
-  } = useInterval(() => updateBoard(), 200)
+  } = useInterval(() => updateBoard(), 250)
 
 
   useEffect(() => {
@@ -100,7 +100,7 @@ function Game() {
 
   return (
     
-    <div className=' bg-slate-500 '>
+    <div className='h-[100vh] bg-slate-900'>
       <div 
         className='bg-red-500 flex-1'
         onMouseDown={() => setMouseDown(true)}
@@ -114,7 +114,7 @@ function Game() {
                 
                 onMouseEnter={() => changeValue(indexI, indexJ)}
                 onClick={() => changeValue(indexI, indexJ, true)} 
-                className={`h-[16px] w-[16px] text-white text-center ${i ? 'bg-red-800 rounded-full' : 'bg-slate-900'}`}
+                className={`h-[16px] w-[16px] text-white text-center transition-all duration-200  ${i ? 'bg-red-800 rounded-full' : 'bg-slate-900'}`}
               >
               </button>
             )}
@@ -124,14 +124,23 @@ function Game() {
       </div>
 
       {/* Absolute Buttons */}
-      <div className='absolute right-2 top-2 space-x-2'>
+      <div className='absolute left-2 top-2 space-x-2'>
         
         <button onClick={isPaused ? start : pause}
-          className='w-24 justify-center self-center 
+          className=' justify-center self-center 
           text-red-300 bg-red-700 px-2 py-1 rounded-md border-2 border-red-900 tracking-tight
-          hover:bg-slate-800 hover:text-red-600 '
+          hover:bg-red-800 hover:text-red-600 fill-slate-900
+          '
         >
-          {isPaused ? 'Resume' : 'Pause'}
+          {isPaused ? PlaySVG : PauseSVG}
+        </button>
+        <button onClick={() => setBOARD(new Array( Number((innerHeight/DIV_H).toFixed(0)) ).fill(Array( Number((innerWidth/DIV_W).toFixed(0)) ).fill(false)))}
+          className=' justify-center self-center 
+          text-red-300 bg-red-700 px-2 py-1 rounded-md border-2 border-red-900 tracking-tight
+          hover:bg-red-800 hover:text-red-600 fill-slate-900
+          '
+        >
+          {DeleteSVG}
         </button>
       </div>
       
